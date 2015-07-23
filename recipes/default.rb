@@ -23,7 +23,5 @@ docker_container "rabbitmq" do
 	container_name node[:rabbitmq][:docker_container]
 	detach true
 	port ['5672:5672', '15672:15672']
-	volume [
-		"#{node[:rabbitmq][:log_path]}:/data/log", 
-		"#{node[:rabbitmq][:data_path]}:/data/mnesia"]
+	volume ["#{node[:rabbitmq][:data_path]}:/var/lib/rabbitmq"]
 end
