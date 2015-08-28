@@ -1,9 +1,12 @@
-include_recipe "docker"
+docker_service 'default' do
+  action [:create, :start]
+end
 
 # Pull docker image
 docker_image node[:rabbitmq][:docker_image] do
 	tag node[:rabbitmq][:docker_image_tag]
 	action :pull
+	notifies :redeploy, "docker_container[rabbitmq]", :immediately
 end
 
 # Cread volumens directory
@@ -18,10 +21,11 @@ end
 
 # Run the docker container
 docker_container "rabbitmq" do
-	action :run
 	image node[:rabbitmq][:docker_image]
+	tag node[:rabbitmq][:docker_image_tag]
 	container_name node[:rabbitmq][:docker_container]
 	detach true
 	port ['5672:5672', '15672:15672']
-	volume ["#{node[:rabbitmq][:data_path]}:/var/lib/rabbitmq"]
+	volumes ["#{node[:rabbitmq][:data_path]}:/var/lib/rabbitmq"]
+	restart_policy 'always'
 end

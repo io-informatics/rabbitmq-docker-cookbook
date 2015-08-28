@@ -1,4 +1,4 @@
-default[:rabbitmq][:docker_image]="dockerfile/rabbitmq"
+default[:rabbitmq][:docker_image]="rabbitmq"
 default[:rabbitmq][:docker_image_tag]="latest"
 default[:rabbitmq][:docker_container]="rabbitmq"
 default[:rabbitmq][:log_path]="/var/log/rabbitmq"
