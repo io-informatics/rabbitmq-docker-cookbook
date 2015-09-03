@@ -26,6 +26,6 @@ docker_container "rabbitmq" do
 	container_name node[:rabbitmq][:docker_container]
 	detach true
 	port ['5672:5672', '15672:15672']
-	volumes ["#{node[:rabbitmq][:data_path]}:/var/lib/rabbitmq"]
+	binds ["#{node[:rabbitmq][:data_path]}:/var/lib/rabbitmq"]
 	restart_policy 'always'
 end
